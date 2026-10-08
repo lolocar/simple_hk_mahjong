@@ -1,0 +1,33 @@
+# 依賴
+node_modules/
+
+# 構建產物
+dist/
+dist-ssr/
+*.local
+
+# 編譯暫存（scratch 測試腳本編譯輸出）
+scratch/out/
+
+# 日誌
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# 編輯器 / 作業系統
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+
+# 環境變數
+.env
+.env.*
+!.env.example
+
+# 未使用的素材（程式碼只引用 src/assets/mahjong_ref.jpg）
+src/assets/Mahjong_eg_HK_carving_A.jpg
+src/assets/tiles/
