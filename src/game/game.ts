@@ -89,6 +89,8 @@ export class Game {
   matchOver = false;
   /** 整場結束原因：積分見底 / 四圈完成（北圈結束） */
   overReason: 'bankrupt' | 'rounds' | null = null;
+  /** 已完成之完整輪莊圈數（東→南→西→北 為一圈）；滿四圈整場結束，期間積分不重置 */
+  roundsCompleted = 0;
 
   // 事件回調
   onEvent: ((e: GameEvent) => void) | null = null;
@@ -315,10 +317,14 @@ export class Game {
       this.lastWinner = winner;
     }
     // 圈數計算：莊家座標即圈風（東位=東圈…北位=北圈）。
-    // 北圈莊家（座標3）本局非連莊（閑家胡或流局）→ 四圈全部完成 → 整場結束。
+    // 北圈莊家（座標3）本局非連莊（閑家胡或流局）→ 莊位回到東位，完成「一圈」（完整輪莊一次）。
+    // 一圈結束時積分不重置、繼續累計；滿四圈（完整輪莊四次）才整場結束並排名。
     if (this.dealer === 3 && this.lastResult !== 'dealer_win') {
-      this.matchOver = true;
-      if (this.overReason !== 'bankrupt') this.overReason = 'rounds';
+      this.roundsCompleted++;
+      if (this.roundsCompleted >= 4) {
+        this.matchOver = true;
+        if (this.overReason !== 'bankrupt') this.overReason = 'rounds';
+      }
     }
   }
 
@@ -352,6 +358,7 @@ export class Game {
     this.lastWinner = null;
     this.matchOver = false;
     this.overReason = null;
+    this.roundsCompleted = 0;
   }
 
   private drawTile(p: number, fromTail = false): TileDef | null {
