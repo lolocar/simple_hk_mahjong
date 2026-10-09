@@ -112,7 +112,7 @@ class App {
         this.renderer.startDeal(hands, this.game.getDealOrder(), () => {
           // 動畫完成：此時手牌是「補花前」的原始配牌（花牌仍在手牌中、花牌區為空），先顯示
           this.refreshAllTiles();
-          this.ui.setPlayersInfo(this.game.wall.length, this.game.current, this.game.dealer, this.game.scores);
+          this.ui.setPlayersInfo(this.game.wall.length, this.game.current, this.game.dealer, this.game.scores, this.game.roundWind.rank);
     this.ui.setScores(this.game.scores, this.game.wins, this.game.deals);
           this.ui.setInfo('配牌完成，開始補花…');
           // 停頓讓玩家看清補花前的手牌，再補花並顯示補花后的手牌與花牌區
@@ -120,7 +120,7 @@ class App {
             const taken = this.game.resolveFlowers();
             for (let i = 0; i < taken; i++) this.renderer.takeWallGroup(1); // 補花取走的牌要同步 3D 牌牆
             this.refreshAllTiles();
-            this.ui.setPlayersInfo(this.game.wall.length, this.game.current, this.game.dealer, this.game.scores);
+            this.ui.setPlayersInfo(this.game.wall.length, this.game.current, this.game.dealer, this.game.scores, this.game.roundWind.rank);
     this.ui.setScores(this.game.scores, this.game.wins, this.game.deals);
             this.game.finishDeal();
           }, 1200);
@@ -147,7 +147,7 @@ class App {
       this.renderer.renderFlowers(i, this.game.players[i].flowers);
     }
     this.renderer.setDealer(this.game.dealer);
-    this.ui.setPlayersInfo(this.game.wall.length, this.game.current, this.game.dealer, this.game.scores);
+    this.ui.setPlayersInfo(this.game.wall.length, this.game.current, this.game.dealer, this.game.scores, this.game.roundWind.rank);
     this.ui.setScores(this.game.scores, this.game.wins, this.game.deals);
 
     switch (e.type) {

@@ -165,8 +165,9 @@ export class Game {
       kind = 'guo';
     }
     this.dealer = dealer;
-    // 圈風 = 莊家座標風（東位莊=東圈、南位莊=南圈、西位莊=西圈、北位莊=北圈）
-    this.roundWind = makeTile('z', dealer + 1);
+    // 圈風固定於「一圈」之內（東→南→西→北 為一圈），只在北家過莊回到東家時才進一圈。
+    // 故圈風 = 已完成圈數 + 1（0→東圈、1→南圈、2→西圈、3→北圈），不隨莊家座標逐局變動。
+    this.roundWind = makeTile('z', this.roundsCompleted + 1);
     this.lastResult = null;
     this.lastWinner = null;
     return { dealer, kind };

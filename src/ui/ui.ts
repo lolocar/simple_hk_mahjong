@@ -262,10 +262,10 @@ export class GameUI {
     this.infoBar.textContent = text;
   }
 
-  setPlayersInfo(wallCount: number, current: number, dealer: number, scores?: number[]) {
+  setPlayersInfo(wallCount: number, current: number, dealer: number, scores?: number[], roundWind = 1) {
     const el = this.root.querySelector('#players-label')!;
     const winds = ['東', '南', '西', '北'];
-    el.innerHTML = `牌牆剩 ${wallCount}<br>當前：${PLAYER_NAMES[current]}<br>莊家：${winds[dealer]}家${dealer === 0 ? '（你）' : ''}｜${winds[dealer]}圈`;
+    el.innerHTML = `牌牆剩 ${wallCount}<br>當前：${PLAYER_NAMES[current]}<br>莊家：${winds[dealer]}家${dealer === 0 ? '（你）' : ''}｜第 ${roundWind} 圈 ${winds[roundWind - 1]}圈`;
     void scores;
   }
 
